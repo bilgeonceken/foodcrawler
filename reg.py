@@ -1,14 +1,7 @@
 import re
-import subprocess
+import requests
 
-args = ["curl", "http://kafeterya.metu.edu.tr/" ">" "kaf.html"]
-
-names_file = open("kaf.html", encoding="utf-8")
-
-# puts all the contents of names into data
-data = names_file.read()
-# wipes the file out of memory
-names_file.close()
+data = requests.get("http://kafeterya.metu.edu.tr/").text
 
 foods = re.compile(r'''
     Öğle[ ]Yemeği</h3>\s+
@@ -60,5 +53,5 @@ for i in range(8):
     else:
         noonmenu.append(foodlist[i])
 
-print(midmenu)
-print(noonmenu)
+print("Öğlen: " + " .".join(midmenu))
+print("Akşam: " + " ".join(noonmenu))
